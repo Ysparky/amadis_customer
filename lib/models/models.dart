@@ -1,2 +1,12 @@
 export 'role.dart';
 export 'user.dart';
+export 'presentation.dart';
+export 'category.dart';
+export 'product_presentation.dart';
+export 'product.dart';
+export 'location.dart';
+export 'models.dart';
+export 'order.dart';
+export 'order_state.dart';
+export 'order_type.dart';
+export 'order_detail.dart';
