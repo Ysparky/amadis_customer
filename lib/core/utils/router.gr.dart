@@ -65,7 +65,7 @@ class CustomRouter extends RouterBase {
     },
     SignUpPage: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => SignUpPage(),
+        builder: (context) => const SignUpPage(),
         settings: data,
       );
     },
