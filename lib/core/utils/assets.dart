@@ -7,4 +7,8 @@ class AmadisAssets {
 
   static const logo = 'assets/img/amadis_logo_transp.png';
   static const emptyBox = 'assets/icon/empty-box.png';
+  static const google = 'assets/icon/icons8-logo-de-google-48.png';
+  static const ios = 'assets/icon/icons8-mac-os-48.png';
+  static const credit_card =
+      'assets/icon/icons8-parte-trasera-de-tarjeta-bancaria-40.png';
 }
