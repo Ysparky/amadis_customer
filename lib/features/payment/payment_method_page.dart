@@ -65,7 +65,7 @@ class PaymentMethodPageBase extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       trailing: Icon(Icons.navigate_next),
-                      onTap: () {},
+                      onTap: () => _viewModel.newCardPayment('25000', 'PEN'),
                     ),
                     ListTile(
                       leading: Image.asset(
@@ -80,7 +80,7 @@ class PaymentMethodPageBase extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       trailing: Icon(Icons.navigate_next),
-                      onTap: () {},
+                      onTap: () => _viewModel.nativePayment('25000', 'PEN'),
                     ),
                     ListTile(
                       leading: Image.asset(
@@ -95,7 +95,7 @@ class PaymentMethodPageBase extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       trailing: Icon(Icons.navigate_next),
-                      onTap: () {},
+                      onTap: () => _viewModel.nativePayment('25000', 'PEN'),
                     ),
                   ],
                 ),
