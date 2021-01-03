@@ -26,7 +26,7 @@ class HeaderSide extends StatelessWidget {
               image: DecorationImage(
                 image: AssetImage(AmadisAssets.logo),
                 fit: BoxFit.none,
-                scale: hp(0.35),
+                scale: hp(0.5),
               ),
             ),
           ),

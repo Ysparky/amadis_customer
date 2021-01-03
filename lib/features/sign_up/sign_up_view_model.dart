@@ -18,11 +18,14 @@ class SignUpViewModel extends AmadisViewModel {
 
   bool _visiblePassword = true;
   bool get visiblePassword => _visiblePassword;
+  
+  bool _check =false;
+  bool get check => _check;
 
-  final _signupKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _signupKey = GlobalKey<FormState>();
   GlobalKey<FormState> get signupKey => _signupKey;
 
-  final _clientCodeKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _clientCodeKey = GlobalKey<FormState>();
   GlobalKey<FormState> get clientCodeKey => _clientCodeKey;
 
 
@@ -62,8 +65,10 @@ class SignUpViewModel extends AmadisViewModel {
 
   void validatePersonalInfo(){
     var isFormValid = _signupKey.currentState.validate();
-    if(isFormValid){
-      _pageController.jumpToPage(1);
+    if(_check==false){
+      showErrorSnackBar('¡Verifique que no tenga errores!');
+    }else if(isFormValid){
+      _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
     }else{
       showErrorSnackBar('¡Verifique que no tenga errores!');
     }
@@ -82,5 +87,33 @@ class SignUpViewModel extends AmadisViewModel {
     }else{
       showErrorSnackBar('¡Verifique que no tenga errores!');
     }
+  }
+
+  // String checkBoxValidator(bool value){
+  //   return (value==false) ? 'true' : null;
+  // }
+
+  void toggleCheckbox(bool value){
+    _check=value;
+    //print(value);
+    notifyListeners();
+  }
+
+  void handleFirstButton(){
+    var _page= pageController.page;
+    if(_page==0){
+      ExtendedNavigator.root.pop();
+    }else if(_page==1){
+      pageController.previousPage(duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    }    
+  }
+
+  void handleSecondButton(){
+    var _page= pageController.page;
+    if(_page==0){
+      validatePersonalInfo();
+    }else if(_page==1){
+      validateClientCode();
+    }    
   }
 }
