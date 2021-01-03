@@ -55,10 +55,7 @@ class OrderService {
     }
   }
 
-  Future<bool> additionalCharges(
-    Order order,
-    List<OrderDetail> consumedList,
-  ) async {
+  Future<bool> additionalCharges(Order order) async {
     try {
       final endpoint = '$BASE_URL/notification/';
       final data = {
@@ -67,9 +64,6 @@ class OrderService {
         'missingBoxQuantity': order.missingBoxQuantity,
         'missingBottlesPrice': '1.00',
         'missingBoxesPrice': '4.00',
-        'ordersRemaining': consumedList == null
-            ? null
-            : List<dynamic>.from(consumedList.map((e) => e.toReamingJson())),
       };
       final response =
           await _dio.post(endpoint, data: data, options: dioOptions);

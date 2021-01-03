@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:amadis_customer/features/order_detail/order_detail_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +14,20 @@ import '../../features/dashboard/dashboard_page.dart';
 import '../../features/login/login_page.dart';
 import '../../features/sign_up/sign_up_page.dart';
 import '../../features/welcome/welcome_page.dart';
+import '../../features/order_detail/order_detail_page.dart';
 
 class Routes {
   static const String welcomePage = '/';
   static const String loginPage = '/login-page';
   static const String dashboardPage = '/dashboard-page';
   static const String signUpPage = '/sign-up-page';
+  static const String orderDetailPage = '/order-detail-page';
   static const all = <String>{
     welcomePage,
     loginPage,
     dashboardPage,
     signUpPage,
+    orderDetailPage,
   };
 }
 
@@ -35,6 +39,7 @@ class CustomRouter extends RouterBase {
     RouteDef(Routes.loginPage, page: LoginPage),
     RouteDef(Routes.dashboardPage, page: DashboardPage),
     RouteDef(Routes.signUpPage, page: SignUpPage),
+    RouteDef(Routes.orderDetailPage, page: OrderDetailPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -69,6 +74,12 @@ class CustomRouter extends RouterBase {
         settings: data,
       );
     },
+    OrderDetailPage: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => OrderDetailPage(),
+        settings: data,
+      );
+    }
   };
 }
 

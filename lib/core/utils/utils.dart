@@ -7,3 +7,4 @@ export 'service_injector.dart';
 export 'shared_prefs.dart';
 export 'view_model.dart';
 export 'data.dart';
+export 'blue_gray_map_theme.dart';
