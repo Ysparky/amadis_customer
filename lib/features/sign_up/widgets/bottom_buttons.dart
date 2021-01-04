@@ -1,5 +1,4 @@
 import 'package:amadis_customer/core/utils/utils.dart';
-import 'package:amadis_customer/features/login/login_view_model.dart';
 import 'package:amadis_customer/features/sign_up/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +58,7 @@ class BottomButtons extends StatelessWidget {
         ),
         Expanded(
           child: FlatButton(
-            onPressed: _viewModel.validatePersonalInfo,
+            onPressed: _viewModel.handleSecondButton,
             child: Text(
               secondText,
               // 'Siguiente   ￫',

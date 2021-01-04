@@ -10,15 +10,15 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-          child: Text(text),
-        ),
-        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-        elevation: 0.0,
-        color: AmadisColors.primaryColor,
-        textColor: Colors.white,
-        onPressed: onPressed,
-        );
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+        child: Text(text),
+      ),
+      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+      elevation: 0.0,
+      color: AmadisColors.primaryColor,
+      textColor: Colors.white,
+      onPressed: onPressed,
+    );
   }
 }

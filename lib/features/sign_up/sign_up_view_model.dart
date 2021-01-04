@@ -13,29 +13,25 @@ class SignUpViewModel extends AmadisViewModel {
 
   TextEditingController get emailController => _emailcontroller;
   TextEditingController get passwordController => _passwordController;
-  TextEditingController get confirmPasswordController => _confirmPasswordController;
+  TextEditingController get confirmPasswordController =>
+      _confirmPasswordController;
   TextEditingController get clientCodeController => _clientCodeController;
 
   bool _visiblePassword = true;
   bool get visiblePassword => _visiblePassword;
-  
-  bool _check =false;
+
+  bool _check = false;
   bool get check => _check;
 
-  GlobalKey<FormState> _signupKey = GlobalKey<FormState>();
+  final _signupKey = GlobalKey<FormState>();
   GlobalKey<FormState> get signupKey => _signupKey;
 
-  GlobalKey<FormState> _clientCodeKey = GlobalKey<FormState>();
+  final _clientCodeKey = GlobalKey<FormState>();
   GlobalKey<FormState> get clientCodeKey => _clientCodeKey;
 
-
-  final _pageController = PageController(
-    initialPage: 0,
-    keepPage: true
-  );
+  final _pageController = PageController(initialPage: 0, keepPage: true);
 
   PageController get pageController => _pageController;
-
 
   void togglePassword() {
     _visiblePassword = !_visiblePassword;
@@ -57,63 +53,69 @@ class SignUpViewModel extends AmadisViewModel {
     return password.isEmpty ? 'La contraseña no puede estar vacía' : null;
   }
 
-  String confirmpasswordValidator(String confirmPassword){
+  String confirmpasswordValidator(String confirmPassword) {
     var password = _passwordController.text;
 
-    return (confirmPassword == password) ? null : 'Contraseñas deben ser iguales';
+    return (confirmPassword == password)
+        ? null
+        : 'Contraseñas deben ser iguales';
   }
 
-  void validatePersonalInfo(){
+  void validatePersonalInfo() {
     var isFormValid = _signupKey.currentState.validate();
-    if(_check==false){
+    if (_check == false) {
       showErrorSnackBar('¡Verifique que no tenga errores!');
-    }else if(isFormValid){
-      _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-    }else{
+    } else if (isFormValid) {
+      _pageController.nextPage(
+          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    } else {
       showErrorSnackBar('¡Verifique que no tenga errores!');
     }
   }
-  String clientCodeValidator(String clientcode){
-    return (clientcode.isEmpty) ? 'Ingrese código de cliente':  null;
+
+  String clientCodeValidator(String clientcode) {
+    return (clientcode.isEmpty) ? 'Ingrese código de cliente' : null;
   }
 
-  void validateClientCode()async{
+  void validateClientCode() async {
     var isFormValid = _clientCodeKey.currentState.validate();
-    if(isFormValid){
+    if (isFormValid) {
       setLoading(true);
-      final success = await authService.validateClientCode(_emailcontroller.text, _passwordController.text, _clientCodeController.text);
+      final success = await authService.validateClientCode(
+          _emailcontroller.text,
+          _passwordController.text,
+          _clientCodeController.text);
       setLoading(false);
-      (success) ? ExtendedNavigator.root.pop() : showErrorSnackBar('¡Verifique que tu código de cliente sea correcto!');
-    }else{
+      (success)
+          ? ExtendedNavigator.root.pop()
+          : showErrorSnackBar(
+              '¡Verifique que tu código de cliente sea correcto!');
+    } else {
       showErrorSnackBar('¡Verifique que no tenga errores!');
     }
   }
 
-  // String checkBoxValidator(bool value){
-  //   return (value==false) ? 'true' : null;
-  // }
-
-  void toggleCheckbox(bool value){
-    _check=value;
-    //print(value);
+  void toggleCheckbox(bool value) {
+    _check = value;
     notifyListeners();
   }
 
-  void handleFirstButton(){
-    var _page= pageController.page;
-    if(_page==0){
+  void handleFirstButton() {
+    var _page = pageController.page;
+    if (_page == 0) {
       ExtendedNavigator.root.pop();
-    }else if(_page==1){
-      pageController.previousPage(duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-    }    
+    } else if (_page == 1) {
+      pageController.previousPage(
+          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    }
   }
 
-  void handleSecondButton(){
-    var _page= pageController.page;
-    if(_page==0){
+  void handleSecondButton() {
+    var _page = pageController.page;
+    if (_page == 0.0) {
       validatePersonalInfo();
-    }else if(_page==1){
+    } else if (_page == 1.0) {
       validateClientCode();
-    }    
+    }
   }
 }

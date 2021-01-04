@@ -5,7 +5,6 @@ class XD extends StatelessWidget {
 
   final String inputText;
   final TextFormField textFormField;
-  
 
   @override
   Widget build(BuildContext context) {

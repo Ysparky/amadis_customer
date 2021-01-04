@@ -1,6 +1,5 @@
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/core/widgets/widgets.dart';
-
 import 'package:amadis_customer/features/sign_up/sign_up_view_model.dart';
 import 'package:amadis_customer/features/sign_up/widgets/bottom_buttons.dart';
 import 'package:amadis_customer/features/sign_up/widgets/signup_button.dart';
@@ -82,7 +81,7 @@ class SignUpPageBase extends StatelessWidget {
   }
 
   Widget _infoPersonal(BuildContext context, SignUpViewModel viewModel) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
+    var statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
       child: Form(
         key: viewModel.signupKey,
@@ -109,10 +108,6 @@ class SignUpPageBase extends StatelessWidget {
                           height: 30.0,
                         ),
                         _crearContrasena2(viewModel),
-                        // Divider(
-                        //   height: 30.0,
-                        // ),
-                        // _crearBotonPersonalInfo(viewModel),
                         Divider(
                           height: 30.0,
                         ),
@@ -138,10 +133,10 @@ class SignUpPageBase extends StatelessWidget {
   }
 
   Widget _miCuenta(BuildContext context, SignUpViewModel viewModel) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
+    var statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
       child: Form(
-        key: viewModel.signupKey,
+        key: viewModel.clientCodeKey,
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints:
@@ -153,26 +148,16 @@ class SignUpPageBase extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Column(
                       children: [
-                        Divider(
-                          height: 30.0,
-                        ),
+                        Divider(height: 30.0),
                         _crearCDC(viewModel),
-                        Divider(
-                          height: 30.0,
-                        ),
-                        // _crearBotonClientCode(viewModel),
-                        // Divider(
-                        //   height: 30.0,
-                        // ),
+                        Divider(height: 30.0),
                       ],
                     ),
                   ),
                   Spacer(flex: 1),
                   BottomButtons(
-                    //firstText: '',
                     firstText2: 'Regresar',
                     secondText: 'Validar',
-
                   ),
                 ],
               ),
@@ -181,19 +166,6 @@ class SignUpPageBase extends StatelessWidget {
         ),
       ),
     );
-
-    // Container(
-    //   child: Form(
-    //     key: viewModel.clientCodeKey,
-    //     child: ListView(
-    //       children: [
-
-    //       ],
-    //     ),
-    //   ),
-    //   padding: EdgeInsets.symmetric(horizontal: 30.0),
-    //   // margin: EdgeInsets.only(top: 130.0),
-    // );
   }
 
   Widget _terminos(BuildContext context, SignUpViewModel viewModel) {
@@ -203,7 +175,6 @@ class SignUpPageBase extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
-          //_barraPaginacion(),
           SizedBox(
             height: 20.0,
           ),
@@ -218,7 +189,6 @@ class SignUpPageBase extends StatelessWidget {
         ],
       ),
       padding: EdgeInsets.symmetric(horizontal: 30.0),
-      // margin: EdgeInsets.only(top: 130.0),
     );
   }
 
@@ -283,20 +253,6 @@ class SignUpPageBase extends StatelessWidget {
     );
   }
 
-  Widget _crearBotonPersonalInfo(SignUpViewModel viewModel) {
-    return SignUpButton(
-      text: 'SIGUIENTE',
-      onPressed: viewModel.validatePersonalInfo,
-    );
-  }
-
-  Widget _crearBotonClientCode(SignUpViewModel viewModel) {
-    return SignUpButton(
-      text: 'VALIDAR',
-      onPressed: viewModel.validateClientCode,
-    );
-  }
-
   Widget _crearBotonTerms(SignUpViewModel viewModel) {
     return SignUpButton(
       text: 'FINALIZAR',
@@ -325,31 +281,37 @@ class SignUpPageBase extends StatelessWidget {
   Widget _crearTerminos(BuildContext context, SignUpViewModel viewModel) {
     return Column(
       children: [
-        Row(children: [
-          Checkbox(value: viewModel.check, onChanged: viewModel.toggleCheckbox),
-          Expanded(
+        Row(
+          children: [
+            Checkbox(
+                value: viewModel.check, onChanged: viewModel.toggleCheckbox),
+            Expanded(
               child: TextButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (_) => CustomDialog(
-                        title: 'Términos y condiciones',
-                        description:
-                            'La normativa legal exige que el usuario tenga conocimiento de las condiciones de '
-                            'contratación de un producto o servicio, por lo que una redacción incompleta o inadecuada'
-                            'puede dar a lugar a la imposición de una sanción por parte de un ente público.\n\n'
-                            'Su importancia también radica en la confianza que genera en los...',
-                        //description2: 'hola',
-                      ));
-            },
-            child: Text(
-              'Aceptar términos y condiciones',
-              style: TextStyle(fontSize: 15,decoration: TextDecoration.underline, ),
-              ///Theme.of(context).textTheme.bodyText2,
-            ),
-            autofocus: true,
-          ))
-        ]),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => CustomDialog(
+                      title: 'Términos y condiciones',
+                      description:
+                          'La normativa legal exige que el usuario tenga conocimiento de las condiciones de '
+                          'contratación de un producto o servicio, por lo que una redacción incompleta o inadecuada'
+                          'puede dar a lugar a la imposición de una sanción por parte de un ente público.\n\n'
+                          'Su importancia también radica en la confianza que genera en los...',
+                    ),
+                  );
+                },
+                child: Text(
+                  'Aceptar términos y condiciones',
+                  style: TextStyle(
+                    fontSize: 15,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                autofocus: true,
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
@@ -364,119 +326,8 @@ class SignUpPageBase extends StatelessWidget {
       ],
     );
   }
-
-  Widget _barraPaginacion() {
-    // final pageViewIndex= Provider.of<SliderModel>(context).currentPage;
-    return Container(
-      child: CustomPaint(
-        painter: MiPaint1(),
-        child: Row(
-          children: [
-            SizedBox(
-              width: size.width * 0.005,
-            ),
-            Column(
-              children: [
-                Container(
-                  child: CircleAvatar(
-                    child: CircleAvatar(
-                      child: CircleAvatar(
-                        //backgroundColor: _pageController.currentPage() ? AmadisColors.primaryColor:Colors.white,
-                        //backgroundColor: (pageViewController.page==pageViewIndex.currentPage) ? AmadisColors.primaryColor : Colors.white,
-                        backgroundColor: AmadisColors.primaryColor,
-                        radius: 10,
-                      ),
-                      backgroundColor: Colors.white,
-                      radius: 17,
-                    ),
-                    radius: 20,
-                    backgroundColor: AmadisColors.primaryColor,
-                  ),
-                ),
-                Text('INFORMACIÓN'),
-                Text('PERSONAL'),
-              ],
-            ),
-            SizedBox(
-              width: size.width * 0.005,
-            ),
-            Column(
-              children: [
-                Container(
-                  child: CircleAvatar(
-                    child: CircleAvatar(
-                      child: CircleAvatar(
-                        //backgroundColor: _pageController.currentPage() ? AmadisColors.primaryColor:Colors.white,
-                        backgroundColor: Colors.white,
-                        radius: 10,
-                      ),
-                      backgroundColor: Colors.white,
-                      radius: 17,
-                    ),
-                    radius: 20,
-                    backgroundColor: AmadisColors.primaryColor,
-                  ),
-                ),
-                Text('MI CUENTA'),
-                Text(''),
-              ],
-            ),
-            SizedBox(
-              width: size.width * 0.005,
-            ),
-            Column(
-              children: [
-                Container(
-                  child: CircleAvatar(
-                    child: CircleAvatar(
-                      child: CircleAvatar(
-                        //backgroundColor: _pageController.currentPage() ? AmadisColors.primaryColor:Colors.white,
-                        backgroundColor: Colors.white,
-                        radius: 10,
-                      ),
-                      backgroundColor: Colors.white,
-                      radius: 17,
-                    ),
-                    radius: 20,
-                    backgroundColor: AmadisColors.primaryColor,
-                  ),
-                ),
-                Text('TÉRMINOS Y'),
-                Text('CONDICIONES'),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
-class MiPaint1 extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = AmadisColors.primaryColor
-      ..strokeWidth = 3
-      ..style = PaintingStyle.stroke; //la linea
-    final path = Path();
-    path.moveTo(size.width * 0.18, size.height * 0.3);
-    path.lineTo(size.width * 0.45, size.height * 0.3);
-    path.lineTo(size.width * 0.735, size.height * 0.3);
-    //path.lineTo(size.width * 0.5, 0);
-    // path.moveTo(5, 0);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(MiPaint1 oldDelegate) => false;
-
-  @override
-  bool shouldRebuildSemantics(MiPaint1 oldDelegate) => false;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CustomDialog extends StatelessWidget {
   const CustomDialog(
       {Key key, this.title, this.description, this.description2, this.image})
@@ -496,7 +347,7 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  dialogContent(BuildContext context) {
+  Stack dialogContent(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -561,15 +412,6 @@ class CustomDialog extends StatelessWidget {
             ],
           ),
         ),
-        // Positioned(
-        //   top: 0,
-        //   left: 16,
-        //   right: 16,
-        //   child: CircleAvatar(
-        //     backgroundColor: Colors.white,
-        //     radius: 50,
-        //   ),
-        //   ),
       ],
     );
   }
