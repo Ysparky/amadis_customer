@@ -6,15 +6,15 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:amadis_customer/features/order_detail/order_detail_page.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/dashboard/dashboard_page.dart';
 import '../../features/login/login_page.dart';
+import '../../features/order_detail/order_detail_page.dart';
 import '../../features/sign_up/sign_up_page.dart';
 import '../../features/welcome/welcome_page.dart';
-import '../../features/order_detail/order_detail_page.dart';
+import '../../models/models.dart';
 
 class Routes {
   static const String welcomePage = '/';
@@ -75,11 +75,15 @@ class CustomRouter extends RouterBase {
       );
     },
     OrderDetailPage: (data) {
+      final args = data.getArgs<OrderDetailPageArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => OrderDetailPage(),
+        builder: (context) => OrderDetailPage(
+          key: args.key,
+          order: args.order,
+        ),
         settings: data,
       );
-    }
+    },
   };
 }
 
@@ -92,4 +96,11 @@ class DashboardPageArguments {
   final Key key;
   final int initialPage;
   DashboardPageArguments({this.key, this.initialPage});
+}
+
+/// OrderDetailPage arguments holder class
+class OrderDetailPageArguments {
+  final Key key;
+  final Order order;
+  OrderDetailPageArguments({this.key, @required this.order});
 }

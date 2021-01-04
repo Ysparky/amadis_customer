@@ -14,7 +14,7 @@ class OrderService {
   final _dio = Dio();
   final _endpoint = '$BASE_URL/orders/';
 
-  Future<void> getOrders({int stateId = 1}) async {
+  Future<void> getOrders({int stateId = 2}) async {
     try {
       final params = {'orderStateId': stateId};
       final response = await _dio.get(

@@ -1,3 +1,5 @@
+import 'package:amadis_customer/core/utils/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:amadis_customer/models/order.dart';
@@ -18,8 +20,10 @@ class OrderCardItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: wp(5), vertical: hp(0.8)),
       elevation: 2.0,
       child: MaterialButton(
-        onPressed: () =>
-            Navigator.pushNamed(context, 'order_detail', arguments: order),
+        onPressed: () => ExtendedNavigator.root.push(
+          Routes.orderDetailPage,
+          arguments: OrderDetailPageArguments(order: order),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: hp(1)),
           child: Row(

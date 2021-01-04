@@ -9,7 +9,7 @@ class ListOrdersViewModel extends AmadisViewModel {
   ListOrdersViewModel() {
     orderService.getOrders();
     _statesList = orderStates.toList();
-    _activeState = _statesList.first;
+    _activeState = _statesList.elementAt(1);
   }
 
   final orderService = injector<OrderService>();
