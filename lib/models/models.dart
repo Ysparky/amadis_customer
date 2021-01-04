@@ -5,6 +5,7 @@ export 'category.dart';
 export 'product_presentation.dart';
 export 'product.dart';
 export 'location.dart';
+export 'login_response.dart';
 export 'models.dart';
 export 'order.dart';
 export 'order_state.dart';
