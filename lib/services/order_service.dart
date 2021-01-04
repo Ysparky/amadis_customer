@@ -1,3 +1,4 @@
+import 'package:amadis_customer/core/utils/shared_prefs.dart';
 import 'package:dio/dio.dart';
 
 import 'package:amadis_customer/core/utils/constants.dart';
@@ -10,13 +11,17 @@ class OrderService {
   }
 
   BehaviorSubject<List<Order>> orders;
+  final _prefs = SharedPrefs();
 
   final _dio = Dio();
   final _endpoint = '$BASE_URL/orders/';
 
   Future<void> getOrders({int stateId = 2}) async {
     try {
-      final params = {'orderStateId': stateId};
+      final params = {
+        'orderStateId': stateId,
+        'customerId': _prefs.customerId,
+      };
       final response = await _dio.get(
         _endpoint,
         options: dioOptions,
