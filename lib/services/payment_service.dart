@@ -27,8 +27,12 @@ class PaymentService {
     String currency,
     PaymentMethod paymentMethod,
   ) async {
-    final paymentResult = await _makePayment(amount, currency, paymentMethod);
-    print(paymentResult.toJson());
+    try {
+      final paymentResult = await _makePayment(amount, currency, paymentMethod);
+      print(paymentResult.toJson());
+    } catch (e) {
+      print('Error en intento: ${e.toString()}');
+    }
   }
 
   Future nativePay(String amount, String currency) async {
@@ -76,7 +80,7 @@ class PaymentService {
 
       return PaymentIntentResponse.fromJson(response.data);
     } catch (e) {
-      print(e.toString());
+      print('ERROR EN EL PAYMENT INTENT' + e.toString());
       return null;
     }
   }
@@ -98,7 +102,7 @@ class PaymentService {
 
       return paymentResult;
     } catch (e) {
-      print(e.toString());
+      print('MAKE PAYMENT ERROR:' + e.toString());
       return null;
     }
   }

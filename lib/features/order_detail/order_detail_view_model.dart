@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:amadis_customer/core/utils/router.gr.dart';
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/models/models.dart';
 import 'package:amadis_customer/services/order_service.dart';
@@ -58,13 +59,28 @@ class OrderDetailViewModel extends AmadisViewModel {
   void _newCardPayment() async {
     ExtendedNavigator.root.pop();
     print('requesting data');
-    final paymentMethod = await StripePayment.paymentRequestWithCardForm(
-      CardFormPaymentRequest(),
-    );
-    print('completed form');
-    setLoading(true);
-    await _paymentService.payWithNewCard(amount, currency, paymentMethod);
-    setLoading(false);
+    try {
+      final paymentMethod = await StripePayment.paymentRequestWithCardForm(
+        CardFormPaymentRequest(),
+      );
+      setLoading(true);
+      await _paymentService.payWithNewCard(amount, currency, paymentMethod);
+      setLoading(false);
+      showMessageSnackBar(
+        'El pago ha sido realizado correctamente',
+        duration: const Duration(seconds: 2),
+      );
+      await Future.delayed(const Duration(seconds: 2)).then(
+        (value) => ExtendedNavigator.root
+            .popUntil(ModalRoute.withName(Routes.dashboardPage)),
+      );
+    } catch (e) {
+      print('Error en intento: ${e.toString()}');
+      showErrorSnackBar(
+        'El intento de pago ha sido cancelado',
+        duration: const Duration(seconds: 1),
+      );
+    }
   }
 
   void _nativePayment() async {
@@ -94,7 +110,7 @@ class OrderDetailViewModel extends AmadisViewModel {
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     trailing: Icon(Icons.navigate_next),
-                    onTap: () => _newCardPayment(),
+                    onTap: _newCardPayment,
                   ),
                   ListTile(
                     leading: Image.asset(
@@ -111,7 +127,7 @@ class OrderDetailViewModel extends AmadisViewModel {
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     trailing: Icon(Icons.navigate_next),
-                    onTap: () => _nativePayment(),
+                    onTap: _nativePayment,
                   ),
                 ],
               ),
