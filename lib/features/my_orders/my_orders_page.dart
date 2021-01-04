@@ -11,9 +11,9 @@ class MyOrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ListOrdersViewModel()),
+        ChangeNotifierProvider(create: (_) => MyOrdersViewModel()),
       ],
-      child: LoadingOverlay<ListOrdersViewModel>(
+      child: LoadingOverlay<MyOrdersViewModel>(
         child: MyOrdersPageBase(),
       ),
     );
@@ -23,7 +23,7 @@ class MyOrdersPage extends StatelessWidget {
 class MyOrdersPageBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _viewModel = Provider.of<ListOrdersViewModel>(context);
+    final _viewModel = Provider.of<MyOrdersViewModel>(context);
     return Scaffold(
         backgroundColor: AmadisColors.backgroundColor,
         appBar: CustomAppBar(headerTitle: 'Mis Pedidos'),

@@ -13,7 +13,7 @@ class EmptyOrdersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = Provider.of<ListOrdersViewModel>(context);
+    final _viewModel = Provider.of<MyOrdersViewModel>(context);
     return CustomScrollView(
       physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       slivers: [

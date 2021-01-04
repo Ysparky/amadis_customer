@@ -5,8 +5,8 @@ import 'package:amadis_customer/models/models.dart';
 import 'package:amadis_customer/models/order.dart';
 import 'package:amadis_customer/services/order_service.dart';
 
-class ListOrdersViewModel extends AmadisViewModel {
-  ListOrdersViewModel() {
+class MyOrdersViewModel extends AmadisViewModel {
+  MyOrdersViewModel() {
     orderService.getOrders();
     _statesList = [
       orderStates[0],

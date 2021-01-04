@@ -14,7 +14,7 @@ class OrderStateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = Provider.of<ListOrdersViewModel>(context);
+    final _viewModel = Provider.of<MyOrdersViewModel>(context);
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: hp(1),
