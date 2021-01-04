@@ -16,7 +16,7 @@ class CustomTableBody extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: hp(1.0)),
+          padding: EdgeInsets.symmetric(vertical: hp(1.0), horizontal: hp(1.0)),
           child: Row(
             children: children,
           ),

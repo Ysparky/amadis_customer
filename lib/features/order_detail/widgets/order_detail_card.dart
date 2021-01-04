@@ -51,7 +51,6 @@ class OrderDetailCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: hp(1.0)),
             ..._viewModel.fullOrder.ordersDetail
                 .map(
                   (detail) => CustomTableBody(
