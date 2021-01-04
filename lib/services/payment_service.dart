@@ -63,6 +63,8 @@ class PaymentService {
   Future<PaymentIntentResponse> _createPaymentIntent(
       String amount, String currency) async {
     try {
+      print(amount);
+      print(currency);
       final data = {'amount': amount, 'currency': currency};
       final headerOptions = Options(
         contentType: Headers.formUrlEncodedContentType,

@@ -89,7 +89,7 @@ class OrderDetailCard extends StatelessWidget {
                 )
                 .toList(),
             Text(
-              'Precio Total: S/. ${_viewModel.calculateTotalPrice()}',
+              'Precio Total: S/. ${_viewModel.calculateTotalPrice().toStringAsFixed(2)}',
               textAlign: TextAlign.right,
               style: Theme.of(context).textTheme.subtitle1.copyWith(
                     color: AmadisColors.primaryColor,

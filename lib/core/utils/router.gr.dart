@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import '../../features/dashboard/dashboard_page.dart';
 import '../../features/login/login_page.dart';
 import '../../features/order_detail/order_detail_page.dart';
-import '../../features/payment/payment_method_page.dart';
 import '../../features/sign_up/sign_up_page.dart';
 import '../../features/welcome/welcome_page.dart';
 import '../../models/models.dart';
@@ -23,14 +22,12 @@ class Routes {
   static const String dashboardPage = '/dashboard-page';
   static const String signUpPage = '/sign-up-page';
   static const String orderDetailPage = '/order-detail-page';
-  static const String paymentMethodPage = '/payment-method-page';
   static const all = <String>{
     welcomePage,
     loginPage,
     dashboardPage,
     signUpPage,
     orderDetailPage,
-    paymentMethodPage,
   };
 }
 
@@ -43,7 +40,6 @@ class CustomRouter extends RouterBase {
     RouteDef(Routes.dashboardPage, page: DashboardPage),
     RouteDef(Routes.signUpPage, page: SignUpPage),
     RouteDef(Routes.orderDetailPage, page: OrderDetailPage),
-    RouteDef(Routes.paymentMethodPage, page: PaymentMethodPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -85,12 +81,6 @@ class CustomRouter extends RouterBase {
           key: args.key,
           order: args.order,
         ),
-        settings: data,
-      );
-    },
-    PaymentMethodPage: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => PaymentMethodPage(),
         settings: data,
       );
     },

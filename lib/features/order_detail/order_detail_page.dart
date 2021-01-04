@@ -50,7 +50,7 @@ class OrderDetailPageBase extends StatelessWidget {
             ),
             CustomFloatingButton(
               icon: Icon(Icons.payment),
-              onPressed: _viewModel.goBack,
+              onPressed: () => _viewModel.showPaymentMethodModal(context),
             ),
           ],
         ),
