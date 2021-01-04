@@ -33,33 +33,54 @@ class MyOrdersPageBase extends StatelessWidget {
             height: hp(100),
             width: double.infinity,
             color: Color(0xffF6F6F6),
-            child: RefreshIndicator(
-              onRefresh: () => _viewModel.orderService
-                  .getOrders(stateId: _viewModel.activeState.id),
-              color: AmadisColors.secondaryColor,
-              child: StreamBuilder(
-                stream: _viewModel.orders,
-                builder: (_, AsyncSnapshot<List<Order>> snapshot) {
-                  if (snapshot.hasData) {
-                    final orders = snapshot.data;
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      child: snapshot.data.isEmpty
-                          ? EmptyOrdersList()
-                          : ListView.builder(
-                              padding: EdgeInsets.only(bottom: hp(5)),
-                              physics: AlwaysScrollableScrollPhysics(
-                                  parent: BouncingScrollPhysics()),
-                              itemCount: orders.length,
-                              itemBuilder: (_, index) =>
-                                  OrderCardItem(order: orders[index]),
-                            ),
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
+            child: Column(
+              children: [
+                Container(
+                  height: hp(7),
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: hp(1)),
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(left: wp(2), right: wp(2)),
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    itemCount: _viewModel.ordersState.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final state = _viewModel.ordersState[index];
+                      return OrderStateItem(state: state);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => _viewModel.orderService
+                        .getOrders(stateId: _viewModel.activeState.id),
+                    color: AmadisColors.secondaryColor,
+                    child: StreamBuilder(
+                      stream: _viewModel.orders,
+                      builder: (_, AsyncSnapshot<List<Order>> snapshot) {
+                        if (snapshot.hasData) {
+                          final orders = snapshot.data;
+                          return AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 500),
+                            child: snapshot.data.isEmpty
+                                ? EmptyOrdersList()
+                                : ListView.builder(
+                                    padding: EdgeInsets.only(bottom: hp(5)),
+                                    physics: AlwaysScrollableScrollPhysics(
+                                        parent: BouncingScrollPhysics()),
+                                    itemCount: orders.length,
+                                    itemBuilder: (_, index) =>
+                                        OrderCardItem(order: orders[index]),
+                                  ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ));

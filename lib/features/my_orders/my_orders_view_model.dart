@@ -1,5 +1,5 @@
 import 'package:amadis_customer/core/utils/view_model.dart';
-import 'package:amadis_customer/core/utils/data.dart';
+import 'package:amadis_customer/core/utils/data.dart' show orderStates;
 import 'package:amadis_customer/core/utils/service_injector.dart';
 import 'package:amadis_customer/models/models.dart';
 import 'package:amadis_customer/models/order.dart';
@@ -8,7 +8,12 @@ import 'package:amadis_customer/services/order_service.dart';
 class ListOrdersViewModel extends AmadisViewModel {
   ListOrdersViewModel() {
     orderService.getOrders();
-    _statesList = orderStates.toList();
+    _statesList = [
+      orderStates[0],
+      orderStates[1],
+      orderStates[6],
+      orderStates[7],
+    ];
     _activeState = _statesList.elementAt(1);
   }
 
