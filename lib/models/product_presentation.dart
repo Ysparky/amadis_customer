@@ -1,5 +1,4 @@
 import 'package:amadis_customer/models/models.dart';
-import 'package:amadis_customer/models/presentation.dart';
 
 class ProductPresentation {
   ProductPresentation({

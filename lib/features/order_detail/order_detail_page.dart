@@ -54,7 +54,12 @@ class OrderDetailPageBase extends StatelessWidget {
       body: FutureBuilder(
         future: _viewModel.getOrderDetailById(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return ShimmerLoader();
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 1000),
+            child: _viewModel.fullOrder != null
+                ? OrderContainer()
+                : ShimmerLoader(),
+          );
         },
       ),
     );

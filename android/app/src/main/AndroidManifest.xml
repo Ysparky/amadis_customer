@@ -9,6 +9,10 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="Amadis"
         android:icon="@mipmap/launcher_icon">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyB3Ga2vUK-F4KEc2gfubK0CgNWoIwUNXIc"/>
+               
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
