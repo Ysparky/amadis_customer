@@ -15,12 +15,12 @@ class SharedPrefs {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  int get userId {
-    return _preferences.getInt('userId') ?? 0;
+  int get customerId {
+    return _preferences.getInt('customerId') ?? 0;
   }
 
-  set userId(int userId) {
-    _preferences.setInt('userId', userId);
+  set customerId(int userId) {
+    _preferences.setInt('customerId', userId);
   }
 
   bool get isLoggedIn {
@@ -32,7 +32,7 @@ class SharedPrefs {
   }
 
   void removeAll() {
-    _preferences.remove('userId');
+    _preferences.remove('customerId');
     _preferences.remove('isLoggedIn');
   }
 }

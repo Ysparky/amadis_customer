@@ -19,7 +19,8 @@ class AuthService {
       if (response.statusCode == 200) {
         final userData = User.fromJson(response.data['data']);
         _prefs.isLoggedIn = true;
-        _prefs.userId = userData.id;
+        _prefs.customerId = 1;
+        print(response.data['data']);
         return userData;
       } else {
         print('USER NOT FOUND');
