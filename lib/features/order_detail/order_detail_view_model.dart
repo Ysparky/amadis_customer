@@ -5,6 +5,8 @@ import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/models/models.dart';
 import 'package:amadis_customer/services/order_service.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class OrderDetailViewModel extends AmadisViewModel {
@@ -43,5 +45,22 @@ class OrderDetailViewModel extends AmadisViewModel {
       _totalPrice += detail.totalPrice;
     });
     return _totalPrice;
+  }
+
+  void showPaymentMethodModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Wrap(
+                children: [],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
