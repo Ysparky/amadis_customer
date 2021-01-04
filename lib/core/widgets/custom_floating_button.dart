@@ -1,11 +1,10 @@
+import 'package:amadis_customer/core/utils/colors.dart';
 import 'package:flutter/material.dart';
-
-import 'package:amadis_customer/utils/constants.dart';
 
 class CustomFloatingButton extends StatelessWidget {
   const CustomFloatingButton({
     Key key,
-    this.backgroundColor = kPrimaryColor,
+    this.backgroundColor = AmadisColors.primaryColor,
     @required this.icon,
     @required this.onPressed,
   }) : super(key: key);

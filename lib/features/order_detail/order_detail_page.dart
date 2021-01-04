@@ -1,5 +1,8 @@
+import 'package:amadis_customer/core/utils/colors.dart';
 import 'package:amadis_customer/core/utils/loading_overlay.dart';
+import 'package:amadis_customer/core/widgets/widgets.dart';
 import 'package:amadis_customer/features/order_detail/order_detail_view_model.dart';
+import 'package:amadis_customer/features/order_detail/widgets/widgets.dart';
 import 'package:amadis_customer/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +33,30 @@ class OrderDetailPageBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final _viewModel = Provider.of<OrderDetailViewModel>(context);
+    return Scaffold(
+      key: _viewModel.scaffoldKey,
+      extendBodyBehindAppBar: true,
+      backgroundColor: AmadisColors.backgroundColor,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomFloatingButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: _viewModel.goBack,
+            ),
+          ],
+        ),
+      ),
+      body: FutureBuilder(
+        future: _viewModel.getOrderDetailById(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return ShimmerLoader();
+        },
+      ),
+    );
   }
 }
