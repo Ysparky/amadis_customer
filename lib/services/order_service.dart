@@ -16,8 +16,9 @@ class OrderService {
   final _dio = Dio();
   final _endpoint = '$BASE_URL/orders/';
 
-  Future<void> getOrders({int stateId = 2}) async {
+  Future<void> getOrders({int stateId = 1}) async {
     try {
+      print('orderStateId $stateId');
       final params = {
         'orderStateId': stateId,
         'customerId': _prefs.customerId,
@@ -38,8 +39,8 @@ class OrderService {
 
   Future<Order> getOrderById(int id) async {
     try {
-      final responde = await _dio.get('$_endpoint$id', options: dioOptions);
-      return Order.fromJson(responde.data['data']);
+      final response = await _dio.get('$_endpoint$id', options: dioOptions);
+      return Order.fromJson(response.data['data']);
     } catch (e) {
       print(e.toString());
       return null;
@@ -48,8 +49,11 @@ class OrderService {
 
   Future<bool> createOrder(Order order) async {
     try {
-      final response =
-          await _dio.post(_endpoint, data: order.toJson(), options: dioOptions);
+      final response = await _dio.post(
+        _endpoint,
+        data: order.toJson(),
+        options: dioOptions,
+      );
       final success = (response.statusCode == 200) ? true : false;
       return success;
     } catch (e) {
@@ -68,10 +72,33 @@ class OrderService {
         'missingBottlesPrice': '1.00',
         'missingBoxesPrice': '4.00',
       };
-      final response =
-          await _dio.post(endpoint, data: data, options: dioOptions);
+      final response = await _dio.post(
+        endpoint,
+        data: data,
+        options: dioOptions,
+      );
       final success = (response.statusCode == 200) ? true : false;
       return success;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future registerPayment(int orderId, double amount) async {
+    try {
+      final endpoint = '$BASE_URL/payment/';
+      final data = {
+        'amount': amount,
+        'orderId': orderId,
+        'paymentMethodId': 1,
+      };
+      final response = await _dio.post(
+        endpoint,
+        data: data,
+        options: dioOptions,
+      );
+      print(response.data['data']);
     } catch (e) {
       print(e);
       return null;

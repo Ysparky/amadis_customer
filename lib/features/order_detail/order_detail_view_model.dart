@@ -22,7 +22,8 @@ class OrderDetailViewModel extends AmadisViewModel {
   final _orderService = injector<OrderService>();
   final _paymentService = injector<PaymentService>();
 
-  String amount = '0.00';
+  double _totalPrice = 0.00;
+  String get amount => (_totalPrice * 100).floor().toString();
 
   Order _fullOrder;
   Order get fullOrder => _fullOrder;
@@ -48,11 +49,9 @@ class OrderDetailViewModel extends AmadisViewModel {
   }
 
   double calculateTotalPrice() {
-    var _totalPrice = 0.00;
     _fullOrder.ordersDetail.forEach((detail) {
       _totalPrice += detail.totalPrice;
     });
-    amount = (_totalPrice * 100).floor().toString();
     return _totalPrice;
   }
 
@@ -65,14 +64,21 @@ class OrderDetailViewModel extends AmadisViewModel {
       );
       setLoading(true);
       await _paymentService.payWithNewCard(amount, currency, paymentMethod);
+      await _orderService.registerPayment(_fullOrder.id, _totalPrice);
       setLoading(false);
       showMessageSnackBar(
         'El pago ha sido realizado correctamente',
         duration: const Duration(seconds: 2),
       );
       await Future.delayed(const Duration(seconds: 2)).then(
-        (value) => ExtendedNavigator.root
-            .popUntil(ModalRoute.withName(Routes.dashboardPage)),
+        (value) {
+          ExtendedNavigator.root.popUntilRoot();
+          ExtendedNavigator.root.popAndPush(
+            Routes.dashboardPage,
+            arguments:
+                DashboardPageArguments(initialPage: 1, initialStateId: 8),
+          );
+        },
       );
     } catch (e) {
       print('Error en intento: ${e.toString()}');
@@ -86,6 +92,19 @@ class OrderDetailViewModel extends AmadisViewModel {
   void _nativePayment() async {
     ExtendedNavigator.root.pop();
     await _paymentService.nativePay(amount, currency);
+    showMessageSnackBar(
+      'El pago ha sido realizado correctamente',
+      duration: const Duration(seconds: 2),
+    );
+    await Future.delayed(const Duration(seconds: 2)).then(
+      (value) {
+        ExtendedNavigator.root.popUntilRoot();
+        ExtendedNavigator.root.popAndPush(
+          Routes.dashboardPage,
+          arguments: DashboardPageArguments(initialPage: 1, initialStateId: 8),
+        );
+      },
+    );
   }
 
   void showPaymentMethodModal(BuildContext context) {

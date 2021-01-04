@@ -6,15 +6,19 @@ import 'package:amadis_customer/models/order.dart';
 import 'package:amadis_customer/services/order_service.dart';
 
 class MyOrdersViewModel extends AmadisViewModel {
-  MyOrdersViewModel() {
-    orderService.getOrders();
+  MyOrdersViewModel(initialStateId) {
     _statesList = [
       orderStates[0],
       orderStates[1],
       orderStates[6],
       orderStates[7],
     ];
-    _activeState = _statesList.elementAt(1);
+    _activeState = orderStates
+        .singleWhere((state) => state.id == initialStateId)
+        .copyWith(selected: true);
+    final index = _statesList.indexWhere((state) => state.id == initialStateId);
+    _statesList[index] = _statesList[index].copyWith(selected: true);
+    orderService.getOrders(stateId: _activeState.id);
   }
 
   final orderService = injector<OrderService>();
@@ -27,9 +31,9 @@ class MyOrdersViewModel extends AmadisViewModel {
   OrderState _activeState;
   OrderState get activeState => _activeState;
 
-  Future<void> getOrders(int stateId) async {
+  Future<void> getOrders() async {
     setLoading(true);
-    await orderService.getOrders(stateId: stateId);
+    await orderService.getOrders(stateId: _activeState.id);
     setLoading(false);
     notifyListeners();
   }
@@ -41,7 +45,7 @@ class MyOrdersViewModel extends AmadisViewModel {
       _statesList[index] = _statesList[index].copyWith(selected: false);
       _statesList[idx] = _statesList[idx].copyWith(selected: true);
       _activeState = _statesList[idx];
-      getOrders(orderState.id);
+      getOrders();
       notifyListeners();
     }
   }

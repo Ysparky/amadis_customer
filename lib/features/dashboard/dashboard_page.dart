@@ -6,8 +6,13 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key key, this.initialPage}) : super(key: key);
+  const DashboardPage({
+    Key key,
+    this.initialPage = 0,
+    this.initialStateId = 1,
+  }) : super(key: key);
   final int initialPage;
+  final int initialStateId;
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -18,7 +23,7 @@ class _DashboardScreenState extends State<DashboardPage> {
 
   @override
   void initState() {
-    _currentIndex = widget.initialPage ?? 0;
+    _currentIndex = widget.initialPage;
     _pageController =
         PageController(initialPage: _currentIndex, viewportFraction: 1.0);
     super.initState();
@@ -42,7 +47,7 @@ class _DashboardScreenState extends State<DashboardPage> {
           },
           children: <Widget>[
             HomePage(),
-            MyOrdersPage(),
+            MyOrdersPage(initialStateId: widget.initialStateId),
             ProfilePage(),
           ],
         ),

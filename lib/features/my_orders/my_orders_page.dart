@@ -7,11 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyOrdersPage extends StatelessWidget {
+  const MyOrdersPage({Key key, this.initialStateId = 1}) : super(key: key);
+
+  final int initialStateId;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => MyOrdersViewModel()),
+        ChangeNotifierProvider(
+          create: (_) => MyOrdersViewModel(initialStateId),
+        ),
       ],
       child: LoadingOverlay<MyOrdersViewModel>(
         child: MyOrdersPageBase(),

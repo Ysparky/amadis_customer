@@ -24,49 +24,41 @@ const orderStates = <OrderState>[
     id: 1,
     name: 'Creados',
     description: 'Orden creada.',
-    selected: false,
   ),
   OrderState(
     id: 2,
     name: 'Confirmados',
     description: 'Orden confirmada.',
-    selected: true,
   ),
   OrderState(
     id: 3,
     name: 'Cancelados',
     description: 'Orden cancelada.',
-    selected: false,
   ),
   OrderState(
     id: 4,
     name: 'Preparados',
     description: 'Orden preparada para su envío.',
-    selected: false,
   ),
   OrderState(
     id: 5,
     name: 'En ruta',
     description: 'Orden en ruta.',
-    selected: false,
   ),
   OrderState(
     id: 6,
     name: 'Arribados',
     description: 'Orden arribada al destino.',
-    selected: false,
   ),
   OrderState(
     id: 7,
     name: 'Cotizados',
     description: 'Orden cotizada.',
-    selected: false,
   ),
   OrderState(
     id: 8,
     name: 'Completados',
     description: 'Orden completada.',
-    selected: false,
   ),
 ];
 

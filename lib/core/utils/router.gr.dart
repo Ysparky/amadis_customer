@@ -64,6 +64,7 @@ class CustomRouter extends RouterBase {
         builder: (context) => DashboardPage(
           key: args.key,
           initialPage: args.initialPage,
+          initialStateId: args.initialStateId,
         ),
         settings: data,
       );
@@ -95,7 +96,9 @@ class CustomRouter extends RouterBase {
 class DashboardPageArguments {
   final Key key;
   final int initialPage;
-  DashboardPageArguments({this.key, this.initialPage});
+  final int initialStateId;
+  DashboardPageArguments(
+      {this.key, this.initialPage = 0, this.initialStateId = 1});
 }
 
 /// OrderDetailPage arguments holder class
