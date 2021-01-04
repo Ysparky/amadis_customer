@@ -8,6 +8,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AmadisColors.backgroundColor,
       appBar: CustomAppBar(headerTitle: 'Home'),
+      body: Center(
+        child: Image.asset(AmadisAssets.logo),
+      ),
     );
   }
 }

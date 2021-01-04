@@ -34,6 +34,9 @@ class ProfilePageBase extends StatelessWidget {
           )
         ],
       ),
+      body: Center(
+        child: Image.asset(AmadisAssets.logo),
+      ),
     );
   }
 }
