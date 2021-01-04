@@ -36,4 +36,12 @@ class OrderDetailViewModel extends AmadisViewModel {
     _customerMarker.add(customerMarker);
     return _customerMarker;
   }
+
+  double calculateTotalPrice() {
+    var _totalPrice = 0.00;
+    _fullOrder.ordersDetail.forEach((detail) {
+      _totalPrice += detail.totalPrice;
+    });
+    return _totalPrice;
+  }
 }

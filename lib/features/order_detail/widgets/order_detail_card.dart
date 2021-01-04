@@ -19,40 +19,24 @@ class OrderDetailCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Detalle',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: hp(1.0)),
-                    Text(
-                      orderTypes
-                          .singleWhere(
-                              (oT) => oT.id == _viewModel.fullOrder.orderTypeId)
-                          .name,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ],
+                Text(
+                  'Detalle',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                // ElasticIn(
-                //   delay: Duration(milliseconds: 400),
-                //   child: IconButton(
-                //     onPressed: _viewModel.goToAdditionalCharges,
-                //     icon: Icon(
-                //       Icons.request_quote_rounded,
-                //       color: AmadisColors.primaryColor,
-                //       size: 30,
-                //     ),
-                //   ),
-                // ),
+                SizedBox(height: hp(1.0)),
+                Text(
+                  orderTypes
+                      .singleWhere(
+                          (oT) => oT.id == _viewModel.fullOrder.orderTypeId)
+                      .name,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
               ],
             ),
             SizedBox(height: hp(1.0)),
@@ -61,8 +45,9 @@ class OrderDetailCard extends StatelessWidget {
               child: Row(
                 children: [
                   TableHeaderItem(text: 'Producto'),
-                  TableHeaderItem(text: 'Presentación'),
                   TableHeaderItem(text: 'Cantidad\n(cajas)'),
+                  TableHeaderItem(text: 'Prec. Unit.'),
+                  TableHeaderItem(text: 'Subtotal'),
                 ],
               ),
             ),
@@ -75,24 +60,42 @@ class OrderDetailCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          detail.productPresentation.product.name,
+                          detail.productPresentation.product.name +
+                              ' ' +
+                              detail.productPresentation.presentation.name,
                           textAlign: TextAlign.center,
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          detail.productPresentation.presentation.name,
+                          '${detail.quantity}',
                           textAlign: TextAlign.center,
                         ),
                       ),
                       Expanded(
-                        child: Text('${detail.quantity}',
-                            textAlign: TextAlign.center),
+                        child: Text(
+                          detail.productPresentation.price.toStringAsFixed(2),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          detail.totalPrice?.toStringAsFixed(2),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),
                 )
                 .toList(),
+            Text(
+              'Precio Total: S/. ${_viewModel.calculateTotalPrice()}',
+              textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    color: AmadisColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ],
         ),
       ),
