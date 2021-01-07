@@ -48,11 +48,6 @@ class OrderDetailPageBase extends StatelessWidget {
               icon: Icon(Icons.arrow_back_ios_rounded),
               onPressed: _viewModel.goBack,
             ),
-            if (_viewModel.orderService.order.value.data?.orderStateId == 7)
-              CustomFloatingButton(
-                icon: Icon(Icons.payment),
-                onPressed: () => _viewModel.showPaymentMethodModal(context),
-              )
           ],
         ),
       ),
@@ -65,7 +60,7 @@ class OrderDetailPageBase extends StatelessWidget {
                 return ShimmerLoader();
                 break;
               case Status.COMPLETED:
-                return OrderContainer(order: snapshot.data.data);
+                return OrderContainer();
                 break;
               case Status.ERROR:
                 return Error(

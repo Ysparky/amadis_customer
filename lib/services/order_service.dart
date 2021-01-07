@@ -15,7 +15,6 @@ class OrderService {
   BehaviorSubject<ApiResponse<Order>> order;
 
   final _dio = Dio();
-  final _endpoint = '$BASE_URL/orders/';
   final _prefs = SharedPrefs();
 
   final _helper = ApiBaseHelper();

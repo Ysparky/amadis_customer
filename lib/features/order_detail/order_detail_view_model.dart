@@ -48,6 +48,7 @@ class OrderDetailViewModel extends AmadisViewModel {
   }
 
   double calculateTotalPrice() {
+    _totalPrice = 0.00;
     order.ordersDetail.forEach((detail) {
       _totalPrice += detail.totalPrice;
     });
@@ -106,9 +107,9 @@ class OrderDetailViewModel extends AmadisViewModel {
     );
   }
 
-  void showPaymentMethodModal(BuildContext context) {
+  void showPaymentMethodModal() {
     showModalBottomSheet(
-      context: context,
+      context: scaffoldKey.currentContext,
       builder: (context) {
         return SafeArea(
           child: SingleChildScrollView(
