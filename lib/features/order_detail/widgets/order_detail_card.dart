@@ -33,7 +33,7 @@ class OrderDetailCard extends StatelessWidget {
                 Text(
                   orderTypes
                       .singleWhere(
-                          (oT) => oT.id == _viewModel.fullOrder.orderTypeId)
+                          (oT) => oT.id == _viewModel.order.orderTypeId)
                       .name,
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
@@ -51,11 +51,10 @@ class OrderDetailCard extends StatelessWidget {
                 ],
               ),
             ),
-            ..._viewModel.fullOrder.ordersDetail
+            ..._viewModel.order.ordersDetail
                 .map(
                   (detail) => CustomTableBody(
-                    showDivider:
-                        _viewModel.fullOrder.ordersDetail.last != detail,
+                    showDivider: _viewModel.order.ordersDetail.last != detail,
                     children: [
                       Expanded(
                         child: Text(

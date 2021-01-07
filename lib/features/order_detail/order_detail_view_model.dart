@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:amadis_customer/core/utils/router.gr.dart';
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/models/models.dart';
+import 'package:amadis_customer/networking/api_response.dart';
 import 'package:amadis_customer/services/order_service.dart';
 import 'package:amadis_customer/services/payment_service.dart';
 import 'package:auto_route/auto_route.dart';
@@ -14,25 +15,23 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 
 class OrderDetailViewModel extends AmadisViewModel {
-  OrderDetailViewModel(this.order);
+  OrderDetailViewModel(this.orderId) {
+    orderService.getOrderById(orderId);
+  }
 
-  final Order order;
+  final int orderId;
   final currency = 'PEN';
 
-  final _orderService = injector<OrderService>();
+  final orderService = injector<OrderService>();
   final _paymentService = injector<PaymentService>();
 
   double _totalPrice = 0.00;
   String get amount => (_totalPrice * 100).floor().toString();
 
-  Order _fullOrder;
-  Order get fullOrder => _fullOrder;
+  Stream<ApiResponse<Order>> get fullOrder => orderService.order;
+  Order get order => orderService.order.value.data;
 
   void goBack() => ExtendedNavigator.root.pop();
-
-  Future<void> getOrderDetailById() async {
-    _fullOrder = await _orderService.getOrderById(order.id);
-  }
 
   void onMapCreated(GoogleMapController controller) {
     controller.setMapStyle(jsonEncode(blueGrayMapTheme));
@@ -42,14 +41,14 @@ class OrderDetailViewModel extends AmadisViewModel {
     Set<Marker> _customerMarker = HashSet<Marker>();
     final customerMarker = Marker(
       markerId: MarkerId('customerMarker'),
-      position: _fullOrder.location.coordinates,
+      position: order.location.coordinates,
     );
     _customerMarker.add(customerMarker);
     return _customerMarker;
   }
 
   double calculateTotalPrice() {
-    _fullOrder.ordersDetail.forEach((detail) {
+    order.ordersDetail.forEach((detail) {
       _totalPrice += detail.totalPrice;
     });
     return _totalPrice;
@@ -64,7 +63,7 @@ class OrderDetailViewModel extends AmadisViewModel {
       );
       setLoading(true);
       await _paymentService.payWithNewCard(amount, currency, paymentMethod);
-      await _orderService.registerPayment(_fullOrder.id, _totalPrice);
+      await orderService.registerPayment(order.id, _totalPrice);
       setLoading(false);
       showMessageSnackBar(
         'El pago ha sido realizado correctamente',

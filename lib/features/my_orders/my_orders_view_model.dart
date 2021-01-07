@@ -24,8 +24,7 @@ class MyOrdersViewModel extends AmadisViewModel {
 
   final orderService = injector<OrderService>();
 
-  Stream<List<Order>> get orders => orderService.orders;
-  Stream<ApiResponse<List<Order>>> get orders2 => orderService.orders2;
+  Stream<ApiResponse<List<Order>>> get orders2 => orderService.orders;
 
   List<OrderState> _statesList = [];
   List<OrderState> get ordersState => _statesList;

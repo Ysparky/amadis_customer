@@ -7,12 +7,12 @@ import 'package:rxdart/rxdart.dart';
 
 class OrderService {
   OrderService() {
-    orders = BehaviorSubject<List<Order>>.seeded(null);
-    orders2 = BehaviorSubject<ApiResponse<List<Order>>>.seeded(null);
+    orders = BehaviorSubject<ApiResponse<List<Order>>>.seeded(null);
+    order = BehaviorSubject<ApiResponse<Order>>.seeded(null);
   }
 
-  BehaviorSubject<List<Order>> orders;
-  BehaviorSubject<ApiResponse<List<Order>>> orders2;
+  BehaviorSubject<ApiResponse<List<Order>>> orders;
+  BehaviorSubject<ApiResponse<Order>> order;
 
   final _dio = Dio();
   final _endpoint = '$BASE_URL/orders/';
@@ -21,29 +21,26 @@ class OrderService {
   final _helper = ApiBaseHelper();
 
   Future<void> getOrders({int stateId = 1}) async {
-    orders2.add(ApiResponse.loading('Fetching orders'));
+    orders.add(ApiResponse.loading('Fetching orders'));
     final params = {'orderStateId': stateId, 'customerId': _prefs.customerId};
     final response = await _helper.get('/orders/', params: params);
     if (response.data != null) {
       final _orders =
           List<Order>.from(response.data.map((x) => Order.fromJson(x)));
-      orders2.add(ApiResponse.completed(_orders));
+      orders.add(ApiResponse.completed(_orders));
     } else {
-      orders2.add(ApiResponse.error(response.message, response.statusCode));
+      orders.add(ApiResponse.error(response.message, response.statusCode));
     }
   }
 
-  Future<ApiResponse> getOrderById2(int id) async {
-    return await _helper.get('/orders/$id');
-  }
-
-  Future<Order> getOrderById(int id) async {
-    try {
-      final response = await _dio.get('$_endpoint$id', options: dioOptions);
-      return Order.fromJson(response.data['data']);
-    } catch (e) {
-      print(e.toString());
-      return null;
+  Future<void> getOrderById(int id) async {
+    order.add(ApiResponse.loading('Fetching order detail'));
+    final response = await _helper.get('/orders/$id');
+    if (response.data != null) {
+      final _order = Order.fromJson(response.data);
+      order.add(ApiResponse.completed(_order));
+    } else {
+      order.add(ApiResponse.error(response.message, response.statusCode));
     }
   }
 

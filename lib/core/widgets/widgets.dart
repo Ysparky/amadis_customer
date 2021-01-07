@@ -3,5 +3,6 @@ export 'custom_button..dart';
 export 'custom_form_field.dart';
 export 'custom_floating_button.dart';
 export 'custom_modal.dart';
+export 'error_widget.dart';
 export 'table_body.dart';
 export 'table_header_item.dart';

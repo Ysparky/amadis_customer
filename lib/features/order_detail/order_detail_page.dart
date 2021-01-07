@@ -1,9 +1,9 @@
-import 'package:amadis_customer/core/utils/colors.dart';
-import 'package:amadis_customer/core/utils/loading_overlay.dart';
+import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/core/widgets/widgets.dart';
 import 'package:amadis_customer/features/order_detail/order_detail_view_model.dart';
 import 'package:amadis_customer/features/order_detail/widgets/widgets.dart';
 import 'package:amadis_customer/models/models.dart';
+import 'package:amadis_customer/networking/api_response.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class OrderDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => OrderDetailViewModel(order))
+        ChangeNotifierProvider(create: (_) => OrderDetailViewModel(order.id))
       ],
       child: LoadingOverlay<OrderDetailViewModel>(
         child: OrderDetailPageBase(),
@@ -48,7 +48,7 @@ class OrderDetailPageBase extends StatelessWidget {
               icon: Icon(Icons.arrow_back_ios_rounded),
               onPressed: _viewModel.goBack,
             ),
-            if (_viewModel.order.orderStateId == 7)
+            if (_viewModel.orderService.order.value.data?.orderStateId == 7)
               CustomFloatingButton(
                 icon: Icon(Icons.payment),
                 onPressed: () => _viewModel.showPaymentMethodModal(context),
@@ -56,15 +56,28 @@ class OrderDetailPageBase extends StatelessWidget {
           ],
         ),
       ),
-      body: FutureBuilder(
-        future: _viewModel.getOrderDetailById(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 1000),
-            child: _viewModel.fullOrder != null
-                ? OrderContainer()
-                : ShimmerLoader(),
-          );
+      body: StreamBuilder<ApiResponse<Order>>(
+        stream: _viewModel.fullOrder,
+        builder: (_, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return ShimmerLoader();
+                break;
+              case Status.COMPLETED:
+                return OrderContainer(order: snapshot.data.data);
+                break;
+              case Status.ERROR:
+                return Error(
+                  errorMessage: snapshot.data.message,
+                );
+                break;
+              default:
+                return ShimmerLoader();
+            }
+          } else {
+            return Container();
+          }
         },
       ),
     );

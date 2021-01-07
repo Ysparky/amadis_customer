@@ -1,12 +1,17 @@
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/features/order_detail/order_detail_view_model.dart';
 import 'package:amadis_customer/features/order_detail/widgets/widgets.dart';
+import 'package:amadis_customer/models/order.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class OrderContainer extends StatelessWidget {
-  const OrderContainer({Key key}) : super(key: key);
+  const OrderContainer({
+    Key key,
+    @required this.order,
+  }) : super(key: key);
+  final Order order;
   @override
   Widget build(BuildContext context) {
     final _viewModel = Provider.of<OrderDetailViewModel>(context);
@@ -20,8 +25,8 @@ class OrderContainer extends StatelessWidget {
           child: GoogleMap(
             initialCameraPosition: CameraPosition(
               target: LatLng(
-                _viewModel.fullOrder?.location?.coordinates?.latitude,
-                _viewModel.fullOrder?.location?.coordinates?.longitude,
+                order?.location?.coordinates?.latitude,
+                order?.location?.coordinates?.longitude,
               ),
               zoom: 15,
             ),
@@ -48,7 +53,7 @@ class OrderContainer extends StatelessWidget {
                     EdgeInsets.symmetric(horizontal: wp(5), vertical: hp(2)),
                 child: Column(
                   children: [
-                    OrderDataCard(order: _viewModel.fullOrder),
+                    OrderDataCard(order: order),
                     SizedBox(height: hp(2)),
                     CustomerDataCard(),
                     SizedBox(height: hp(2)),
