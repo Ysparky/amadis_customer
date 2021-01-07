@@ -3,6 +3,7 @@ import 'package:amadis_customer/core/widgets/widgets.dart';
 import 'package:amadis_customer/features/my_orders/my_orders_view_model.dart';
 import 'package:amadis_customer/features/my_orders/widgets/widgets.dart';
 import 'package:amadis_customer/models/order.dart';
+import 'package:amadis_customer/networking/api_response.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,26 +62,48 @@ class MyOrdersPageBase extends StatelessWidget {
                     onRefresh: () => _viewModel.orderService
                         .getOrders(stateId: _viewModel.activeState.id),
                     color: AmadisColors.secondaryColor,
-                    child: StreamBuilder(
-                      stream: _viewModel.orders,
-                      builder: (_, AsyncSnapshot<List<Order>> snapshot) {
+                    child: StreamBuilder<ApiResponse<List<Order>>>(
+                      stream: _viewModel.orders2,
+                      builder: (_, snapshot) {
                         if (snapshot.hasData) {
-                          final orders = snapshot.data;
-                          return AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 500),
-                            child: snapshot.data.isEmpty
-                                ? EmptyOrdersList()
-                                : ListView.builder(
-                                    padding: EdgeInsets.only(bottom: hp(5)),
-                                    physics: AlwaysScrollableScrollPhysics(
-                                        parent: BouncingScrollPhysics()),
-                                    itemCount: orders.length,
-                                    itemBuilder: (_, index) =>
-                                        OrderCardItem(order: orders[index]),
-                                  ),
-                          );
+                          switch (snapshot.data.status) {
+                            case Status.LOADING:
+                              print('loading');
+                              return Center(child: CircularProgressIndicator());
+                              break;
+                            case Status.COMPLETED:
+                              print('completed');
+                              return AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 500),
+                                child: snapshot.data.data.isEmpty
+                                    ? EmptyOrdersList()
+                                    : ListView.builder(
+                                        padding: EdgeInsets.only(bottom: hp(5)),
+                                        physics: AlwaysScrollableScrollPhysics(
+                                          parent: BouncingScrollPhysics(),
+                                        ),
+                                        itemCount: snapshot.data.data.length,
+                                        itemBuilder: (_, index) =>
+                                            OrderCardItem(
+                                                order:
+                                                    snapshot.data.data[index]),
+                                      ),
+                              );
+                              break;
+                            case Status.ERROR:
+                              print('error');
+                              return Error(
+                                errorMessage: snapshot.data.message,
+                                onRetryPressed: () => _viewModel.orderService
+                                    .getOrders(
+                                        stateId: _viewModel.activeState.id),
+                              );
+                              break;
+                            default:
+                              return Center(child: CircularProgressIndicator());
+                          }
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return Container();
                         }
                       },
                     ),
@@ -90,5 +113,45 @@ class MyOrdersPageBase extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class Error extends StatelessWidget {
+  final String errorMessage;
+
+  final Function onRetryPressed;
+
+  const Error({Key key, this.errorMessage, this.onRetryPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            errorMessage,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1
+                .copyWith(color: AmadisColors.errorColor),
+          ),
+          SizedBox(height: 8),
+          RaisedButton(
+            color: AmadisColors.errorColor,
+            child: Text(
+              'Intentar de nuevo',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  .copyWith(color: Colors.white),
+            ),
+            onPressed: onRetryPressed,
+          )
+        ],
+      ),
+    );
   }
 }

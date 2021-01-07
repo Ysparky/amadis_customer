@@ -3,6 +3,7 @@ import 'package:amadis_customer/core/utils/data.dart' show orderStates;
 import 'package:amadis_customer/core/utils/service_injector.dart';
 import 'package:amadis_customer/models/models.dart';
 import 'package:amadis_customer/models/order.dart';
+import 'package:amadis_customer/networking/api_response.dart';
 import 'package:amadis_customer/services/order_service.dart';
 
 class MyOrdersViewModel extends AmadisViewModel {
@@ -24,6 +25,7 @@ class MyOrdersViewModel extends AmadisViewModel {
   final orderService = injector<OrderService>();
 
   Stream<List<Order>> get orders => orderService.orders;
+  Stream<ApiResponse<List<Order>>> get orders2 => orderService.orders2;
 
   List<OrderState> _statesList = [];
   List<OrderState> get ordersState => _statesList;
