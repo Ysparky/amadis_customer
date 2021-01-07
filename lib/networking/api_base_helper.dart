@@ -58,6 +58,7 @@ class ApiBaseHelper {
 
   ApiResponse _errorResponse(DioError e) {
     var message = '';
+    var statusCode = 0;
     if (DioErrorType.CONNECT_TIMEOUT == e.type ||
         DioErrorType.RECEIVE_TIMEOUT == e.type) {
       print('Handle no internet connection');
@@ -65,9 +66,10 @@ class ApiBaseHelper {
           'El servidor no es accesible. Por favor, verifique su conexión a Internet e inténtelo de nuevo.';
     } else if (DioErrorType.RESPONSE == e.type) {
       print('Handle response error');
+      statusCode = e.response.statusCode;
       if (e.response.statusCode != 500) {
         final errorResponse = ErrorResponse.fromJson(e.response.data);
-        message = errorResponse.data.error;
+        message = errorResponse.data.error ?? e.response.statusMessage;
       } else {
         message = e.response.statusMessage;
       }
@@ -81,6 +83,6 @@ class ApiBaseHelper {
             'Problema al conectarse al servidor. Por favor, inténtelo de nuevo.';
       }
     }
-    return ApiResponse.error(message);
+    return ApiResponse.error(message, statusCode);
   }
 }

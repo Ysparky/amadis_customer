@@ -37,7 +37,7 @@ class Data {
   final String error;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        error: json['error'] ?? 'Not Found',
+        error: json['error'],
       );
 
   Map<String, dynamic> toJson() => {

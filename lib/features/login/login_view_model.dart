@@ -1,5 +1,7 @@
 import 'package:amadis_customer/core/utils/router.gr.dart';
 import 'package:amadis_customer/core/utils/utils.dart';
+import 'package:amadis_customer/models/models.dart';
+import 'package:amadis_customer/networking/api_response.dart';
 import 'package:amadis_customer/services/auth_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
@@ -11,6 +13,8 @@ class LoginPageViewModel extends AmadisViewModel {
 
   final _emailController = TextEditingController(text: '');
   final _passwordController = TextEditingController(text: '');
+
+  final _prefs = SharedPrefs();
 
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
@@ -40,9 +44,9 @@ class LoginPageViewModel extends AmadisViewModel {
       final email = _emailController.value.text;
       final password = _passwordController.value.text;
       setLoading(true);
-      final user = await _authService.requestLogin(email, password);
+      final response = await _authService.requestLogin(email, password);
       setLoading(false);
-      await _handleLoginResponse(user);
+      _handleLoginResponse(response);
     } else {
       showErrorSnackBar(
         '¡Verifique que no tenga errores!',
@@ -53,12 +57,17 @@ class LoginPageViewModel extends AmadisViewModel {
     }
   }
 
-  void _handleLoginResponse(dynamic user) async {
-    if (user != null) {
-      await ExtendedNavigator.root.popAndPush(Routes.dashboardPage);
+  void _handleLoginResponse(ApiResponse response) {
+    if (response.data != null) {
+      final user = LoginResponse.fromJson(response.data);
+      _prefs.isLoggedIn = true;
+      _prefs.customerId = user.customerId;
+      ExtendedNavigator.root.popAndPush(Routes.dashboardPage);
     } else {
       showErrorSnackBar(
-        'Correo y/o contraseña incorrectos',
+        response.statusCode == 404
+            ? 'Correo y/o contraseña incorrectos'
+            : response.message,
         duration: const Duration(milliseconds: 1800),
         elevation: 0,
         margin: EdgeInsets.only(bottom: hp(10), left: wp(2), right: wp(2)),
