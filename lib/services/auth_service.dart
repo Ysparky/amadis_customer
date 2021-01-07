@@ -1,11 +1,14 @@
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/models/models.dart';
+import 'package:amadis_customer/networking/api_base_helper.dart';
+import 'package:amadis_customer/networking/api_response.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {
   AuthService();
 
   final _dio = Dio();
+  final _helper = ApiBaseHelper();
   final _endpoint = '$BASE_URL/authenticate/login/';
 
   final _prefs = SharedPrefs();
@@ -36,23 +39,23 @@ class AuthService {
     }
   }
 
-  Future<bool> validateClientCode(
+  Future<ApiResponse> requestLogin2(String email, String password) async {
+    final params = {'isCustomer': 1};
+    final data = {'email': '$email', 'password': '$password'};
+
+    return await _helper.post(
+      '/authenticate/login/',
+      params: params,
+      body: data,
+    );
+  }
+
+  Future<ApiResponse> validateClientCode(
     String email,
     String password,
     String code,
   ) async {
-    try {
-      final _endpoint = '$BASE_URL/customers/$code/account';
-      final data = {'email': '$email', 'password': '$password'};
-      final response = await _dio.put(
-        _endpoint,
-        data: data,
-        options: dioOptions,
-      );
-      return (response.statusCode == 200) ? true : false;
-    } catch (e) {
-      print(e);
-      return false;
-    }
+    final data = {'email': '$email', 'password': '$password'};
+    return await _helper.put('/customers/$code/account', body: data);
   }
 }

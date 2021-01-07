@@ -1,5 +1,5 @@
 import 'package:amadis_customer/core/utils/utils.dart';
-import 'package:amadis_customer/models/payment_intent_response.dart';
+import 'package:amadis_customer/models/responses/payment_intent_response.dart';
 import 'package:dio/dio.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 

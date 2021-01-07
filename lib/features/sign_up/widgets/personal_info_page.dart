@@ -1,8 +1,7 @@
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/core/widgets/custom_form_field.dart';
 import 'package:amadis_customer/features/sign_up/sign_up_view_model.dart';
-import 'package:amadis_customer/features/sign_up/widgets/bottom_buttons.dart';
-import 'package:amadis_customer/features/sign_up/widgets/field_column.dart';
+import 'package:amadis_customer/features/sign_up/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -142,8 +141,7 @@ class TermsAndConditionsRow extends StatelessWidget {
                       text: ' Términos y Condiciones',
                       style: TextStyle(fontWeight: FontWeight.bold),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () =>
-                            viewModel.showTermsAndConditionDialog(context),
+                        ..onTap = viewModel.showTermsAndConditionDialog,
                     )
                   ],
                 ),
@@ -151,89 +149,6 @@ class TermsAndConditionsRow extends StatelessWidget {
             ),
           ),
         )
-      ],
-    );
-  }
-}
-
-class CustomDialog extends StatelessWidget {
-  const CustomDialog({
-    Key key,
-    this.title,
-    this.description,
-  }) : super(key: key);
-
-  final String title, description;
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: dialogContent(context),
-    );
-  }
-
-  Stack dialogContent(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          padding: EdgeInsets.only(
-            top: 30,
-            bottom: 16,
-            left: 16,
-            right: 16,
-          ),
-          margin: EdgeInsets.only(top: 16),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(17),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  offset: Offset(0.0, 10.0),
-                )
-              ]),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 24),
-              Text(
-                description,
-                style: TextStyle(fontSize: 16.0),
-              ),
-              SizedBox(height: 24),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Confirmar',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
       ],
     );
   }

@@ -11,4 +11,8 @@ class AmadisAssets {
   static const ios = 'assets/icon/icons8-mac-os-48.png';
   static const credit_card =
       'assets/icon/icons8-parte-trasera-de-tarjeta-bancaria-40.png';
+  static const check_mark_2 = 'assets/icon/check_mark_2.png';
+
+  static const svg_check_mark = 'assets/icon/check.svg';
+  static const svg_check_mark_2 = 'assets/icon/check_mark.svg';
 }
