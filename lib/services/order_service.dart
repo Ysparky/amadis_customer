@@ -7,7 +7,9 @@ import 'package:rxdart/rxdart.dart';
 
 class OrderService {
   OrderService() {
-    orders = BehaviorSubject<ApiResponse<List<Order>>>.seeded(null);
+    orders = BehaviorSubject<ApiResponse<List<Order>>>.seeded(
+      ApiResponse.loading('Fetching orders'),
+    );
     order = BehaviorSubject<ApiResponse<Order>>.seeded(null);
   }
 
@@ -20,7 +22,6 @@ class OrderService {
   final _helper = ApiBaseHelper();
 
   Future<void> getOrders({int stateId = 1}) async {
-    orders.add(ApiResponse.loading('Fetching orders'));
     final params = {'orderStateId': stateId, 'customerId': _prefs.customerId};
     final response = await _helper.get('/orders/', params: params);
     if (response.data != null) {

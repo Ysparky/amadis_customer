@@ -65,6 +65,8 @@ class OrderDetailPageBase extends StatelessWidget {
               case Status.ERROR:
                 return Error(
                   errorMessage: snapshot.data.message,
+                  onRetryPressed: () =>
+                      _viewModel.orderService.getOrderById(_viewModel.orderId),
                 );
                 break;
               default:
