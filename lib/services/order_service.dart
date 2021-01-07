@@ -1,8 +1,6 @@
-import 'package:amadis_customer/core/utils/shared_prefs.dart';
-import 'package:dio/dio.dart';
-
-import 'package:amadis_customer/core/utils/constants.dart';
+import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/models/models.dart';
+import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 
 class OrderService {
@@ -11,14 +9,13 @@ class OrderService {
   }
 
   BehaviorSubject<List<Order>> orders;
-  final _prefs = SharedPrefs();
 
   final _dio = Dio();
   final _endpoint = '$BASE_URL/orders/';
+  final _prefs = SharedPrefs();
 
   Future<void> getOrders({int stateId = 1}) async {
     try {
-      print('orderStateId $stateId');
       final params = {
         'orderStateId': stateId,
         'customerId': _prefs.customerId,
@@ -54,8 +51,7 @@ class OrderService {
         data: order.toJson(),
         options: dioOptions,
       );
-      final success = (response.statusCode == 200) ? true : false;
-      return success;
+      return (response.statusCode == 200) ? true : false;
     } catch (e) {
       print(e);
       return null;
@@ -77,8 +73,7 @@ class OrderService {
         data: data,
         options: dioOptions,
       );
-      final success = (response.statusCode == 200) ? true : false;
-      return success;
+      return (response.statusCode == 200) ? true : false;
     } catch (e) {
       print(e);
       return null;

@@ -17,7 +17,7 @@ class MyOrdersViewModel extends AmadisViewModel {
         .singleWhere((state) => state.id == initialStateId)
         .copyWith(selected: true);
     final index = _statesList.indexWhere((state) => state.id == initialStateId);
-    _statesList[index] = _statesList[index].copyWith(selected: true);
+    _statesList[index] = _activeState;
     orderService.getOrders(stateId: _activeState.id);
   }
 

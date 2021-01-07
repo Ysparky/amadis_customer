@@ -37,13 +37,18 @@ class AuthService {
   }
 
   Future<bool> validateClientCode(
-      String email, String password, String code) async {
+    String email,
+    String password,
+    String code,
+  ) async {
     try {
-      final response = await _dio
-          .put('$BASE_URL/customers/$code/account', options: dioOptions, data: {
-        'email': '$email',
-        'password': '$password',
-      });
+      final _endpoint = '$BASE_URL/customers/$code/account';
+      final data = {'email': '$email', 'password': '$password'};
+      final response = await _dio.put(
+        _endpoint,
+        data: data,
+        options: dioOptions,
+      );
       return (response.statusCode == 200) ? true : false;
     } catch (e) {
       print(e);

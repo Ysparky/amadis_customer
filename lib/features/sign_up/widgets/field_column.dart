@@ -1,7 +1,9 @@
+import 'package:amadis_customer/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
-class XD extends StatelessWidget {
-  const XD({Key key, this.inputText, this.textFormField}) : super(key: key);
+class FieldColumn extends StatelessWidget {
+  const FieldColumn({Key key, this.inputText, this.textFormField})
+      : super(key: key);
 
   final String inputText;
   final TextFormField textFormField;
@@ -16,9 +18,7 @@ class XD extends StatelessWidget {
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
           textAlign: TextAlign.start,
         ),
-        SizedBox(
-          height: 7,
-        ),
+        SizedBox(height: hp(1)),
         textFormField,
       ],
     );

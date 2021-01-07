@@ -1,3 +1,4 @@
+import 'package:amadis_customer/core/utils/router.gr.dart';
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/services/auth_service.dart';
 import 'package:auto_route/auto_route.dart';
@@ -103,7 +104,7 @@ class SignUpViewModel extends AmadisViewModel {
   void handleFirstButton() {
     var _page = pageController.page;
     if (_page == 0) {
-      ExtendedNavigator.root.pop();
+      ExtendedNavigator.root.popAndPush(Routes.loginPage);
     } else if (_page == 1) {
       pageController.previousPage(
           duration: Duration(milliseconds: 500), curve: Curves.easeInOut);

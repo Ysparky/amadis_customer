@@ -37,14 +37,19 @@ class AmadisViewModel extends ChangeNotifier {
     String message, {
     SnackBarAction action,
     Duration duration,
+    EdgeInsetsGeometry margin,
+    double elevation = 6.0,
   }) {
     if (scaffoldKey.currentState != null) {
       scaffoldKey.currentState.showSnackBar(
         SnackBar(
-          duration: duration ?? Duration(seconds: 3),
-          content: Text(message),
-          backgroundColor: AmadisColors.errorColor,
           action: action,
+          backgroundColor: AmadisColors.errorColor,
+          behavior: SnackBarBehavior.floating,
+          content: Text(message),
+          duration: duration ?? Duration(seconds: 3),
+          elevation: elevation,
+          margin: margin ?? EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 10.0),
         ),
       );
     }

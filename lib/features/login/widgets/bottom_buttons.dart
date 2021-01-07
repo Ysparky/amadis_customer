@@ -19,9 +19,8 @@ class BottomButtons extends StatelessWidget {
             height: hp(9),
             minWidth: double.infinity,
             shape: ContinuousRectangleBorder(
-                side: BorderSide(
-              color: Colors.indigo[50],
-            )),
+              side: BorderSide(color: Colors.indigo[50]),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

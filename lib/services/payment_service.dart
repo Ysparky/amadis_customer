@@ -38,22 +38,24 @@ class PaymentService {
   Future nativePay(String amount, String currency) async {
     try {
       final newAmount = double.parse(amount) / 100;
+      final androidPayOptions = AndroidPayPaymentRequest(
+        currencyCode: currency,
+        totalPrice: amount,
+      );
+      final applePayOptions = ApplePayPaymentOptions(
+        countryCode: 'US',
+        currencyCode: currency,
+        items: [ApplePayItem(label: 'Pago por pedido', amount: '$newAmount')],
+      );
+
       final token = await StripePayment.paymentRequestWithNativePay(
-        androidPayOptions: AndroidPayPaymentRequest(
-          currencyCode: currency,
-          totalPrice: amount,
-        ),
-        applePayOptions: ApplePayPaymentOptions(
-          countryCode: 'US',
-          currencyCode: currency,
-          items: [
-            ApplePayItem(label: 'Super producto 1', amount: '$newAmount')
-          ],
-        ),
+        androidPayOptions: androidPayOptions,
+        applePayOptions: applePayOptions,
       );
 
       final paymentMethod = await StripePayment.createPaymentMethod(
-          PaymentMethodRequest(card: CreditCard(token: token.tokenId)));
+        PaymentMethodRequest(card: CreditCard(token: token.tokenId)),
+      );
 
       final paymentResult = await _makePayment(amount, currency, paymentMethod);
       print(paymentResult.toJson());
@@ -65,18 +67,21 @@ class PaymentService {
   }
 
   Future<PaymentIntentResponse> _createPaymentIntent(
-      String amount, String currency) async {
+    String amount,
+    String currency,
+  ) async {
     try {
-      print(amount);
-      print(currency);
       final data = {'amount': amount, 'currency': currency};
       final headerOptions = Options(
         contentType: Headers.formUrlEncodedContentType,
         headers: {'Authorization': 'Bearer ${STRIPE_SK}'},
       );
 
-      final response =
-          await _dio.post(_url, data: data, options: headerOptions);
+      final response = await _dio.post(
+        _url,
+        data: data,
+        options: headerOptions,
+      );
 
       return PaymentIntentResponse.fromJson(response.data);
     } catch (e) {

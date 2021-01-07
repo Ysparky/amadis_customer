@@ -18,6 +18,8 @@ class LoginPageViewModel extends AmadisViewModel {
   final _loginKey = GlobalKey<FormState>();
   GlobalKey<FormState> get loginKey => _loginKey;
 
+  void handleSignUp() => ExtendedNavigator.root.popAndPush(Routes.signUpPage);
+
   String emailValidator(String email) {
     final isValid = RegExp(emailRegex).hasMatch(email);
     if (email.isEmpty) {
@@ -29,21 +31,25 @@ class LoginPageViewModel extends AmadisViewModel {
     }
   }
 
-  String passwordValidator(String password) {
-    return password.isEmpty ? 'La contraseña no puede estar vacía' : null;
-  }
+  String passwordValidator(String password) =>
+      password.isEmpty ? 'La contraseña no puede estar vacía' : null;
 
   void login() async {
     var isFormValid = _loginKey.currentState.validate();
     if (isFormValid) {
-      setLoading(true);
       final email = _emailController.value.text;
       final password = _passwordController.value.text;
+      setLoading(true);
       final user = await _authService.requestLogin(email, password);
       setLoading(false);
       await _handleLoginResponse(user);
     } else {
-      showErrorSnackBar('¡Verifique que no tenga errores!');
+      showErrorSnackBar(
+        '¡Verifique que no tenga errores!',
+        duration: const Duration(milliseconds: 1500),
+        elevation: 0,
+        margin: EdgeInsets.only(bottom: hp(10), left: wp(2), right: wp(2)),
+      );
     }
   }
 
@@ -51,11 +57,12 @@ class LoginPageViewModel extends AmadisViewModel {
     if (user != null) {
       await ExtendedNavigator.root.popAndPush(Routes.dashboardPage);
     } else {
-      showErrorSnackBar('Correo y/o contraseña incorrectos');
+      showErrorSnackBar(
+        'Correo y/o contraseña incorrectos',
+        duration: const Duration(milliseconds: 1800),
+        elevation: 0,
+        margin: EdgeInsets.only(bottom: hp(10), left: wp(2), right: wp(2)),
+      );
     }
-  }
-
-  void handleSignUp() {
-    ExtendedNavigator.root.push(Routes.signUpPage);
   }
 }
