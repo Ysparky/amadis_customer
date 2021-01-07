@@ -1,12 +1,16 @@
 import 'package:amadis_customer/core/utils/responsive.dart';
+import 'package:amadis_customer/core/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 
 class FieldColumn extends StatelessWidget {
-  const FieldColumn({Key key, this.inputText, this.textFormField})
-      : super(key: key);
+  const FieldColumn({
+    Key key,
+    this.inputText,
+    this.customFormField,
+  }) : super(key: key);
 
   final String inputText;
-  final TextFormField textFormField;
+  final CustomFormField customFormField;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class FieldColumn extends StatelessWidget {
           textAlign: TextAlign.start,
         ),
         SizedBox(height: hp(1)),
-        textFormField,
+        customFormField,
       ],
     );
   }

@@ -1,4 +1,3 @@
-import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomFormField extends StatelessWidget {
@@ -38,22 +37,6 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _errorBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-      borderSide: BorderSide(
-        color: errorText == ''
-            ? AmadisColors.primaryColor
-            : AmadisColors.errorColor,
-      ),
-    );
-
-    final _normalBorder = bordered
-        ? OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: AmadisColors.primaryColor),
-          )
-        : InputBorder.none;
-
     return TextFormField(
       autofocus: autoFocus,
       controller: textController
@@ -75,11 +58,7 @@ class CustomFormField extends StatelessWidget {
         hintText: hintText,
         isDense: true,
         suffixIcon: suffixIcon,
-        border: _normalBorder,
-        enabledBorder: _normalBorder,
-        focusedBorder: _normalBorder,
-        errorBorder: _errorBorder,
-        focusedErrorBorder: _errorBorder,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
   }
