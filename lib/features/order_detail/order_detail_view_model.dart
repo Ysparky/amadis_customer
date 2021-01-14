@@ -47,6 +47,14 @@ class OrderDetailViewModel extends AmadisViewModel {
     return _customerMarker;
   }
 
+  double calculateSubtotal() {
+    _totalPrice = 0.00;
+    order.ordersDetail.forEach((detail) {
+      _totalPrice += detail.totalPrice;
+    });
+    return _totalPrice;
+  }
+
   double calculateTotalPrice() {
     _totalPrice = 0.00;
     order.ordersDetail.forEach((detail) {
@@ -85,6 +93,8 @@ class OrderDetailViewModel extends AmadisViewModel {
       showErrorSnackBar(
         'El intento de pago ha sido cancelado',
         duration: const Duration(seconds: 1),
+        elevation: 0,
+        margin: EdgeInsets.only(bottom: hp(10), left: wp(2), right: wp(2)),
       );
     }
   }

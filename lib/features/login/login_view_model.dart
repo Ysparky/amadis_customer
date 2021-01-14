@@ -62,6 +62,7 @@ class LoginPageViewModel extends AmadisViewModel {
       final user = LoginResponse.fromJson(response.data);
       _prefs.isLoggedIn = true;
       _prefs.customerId = user.customerId;
+      _prefs.fullName = user.fullName;
       ExtendedNavigator.root.popAndPush(Routes.dashboardPage);
     } else {
       showErrorSnackBar(

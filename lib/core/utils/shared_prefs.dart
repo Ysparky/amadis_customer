@@ -31,6 +31,14 @@ class SharedPrefs {
     _preferences.setBool('isLoggedIn', isLogged);
   }
 
+  String get fullName {
+    return _preferences.getString('fullName') ?? false;
+  }
+
+  set fullName(String fullName) {
+    _preferences.setString('fullName', fullName);
+  }
+
   void removeAll() {
     _preferences.remove('customerId');
     _preferences.remove('isLoggedIn');

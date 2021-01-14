@@ -39,7 +39,7 @@ class OrderDetailCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: hp(1.0)),
+            SizedBox(height: hp(2.0)),
             Ink(
               decoration: BoxDecoration(color: Colors.indigo[50]),
               child: Row(
@@ -86,9 +86,58 @@ class OrderDetailCard extends StatelessWidget {
                   ),
                 )
                 .toList(),
+            SizedBox(height: hp(2.0)),
+            PricesRow(
+              text: 'Subtotal',
+              value: 'S/. ${_viewModel.calculateSubtotal().toStringAsFixed(2)}',
+            ),
+            PricesRow(
+              text:
+                  '${_viewModel.order.missingBottlesQuantity} botellas faltantes',
+              value: 'S/. 100.00',
+            ),
+            PricesRow(
+              text:
+                  '${_viewModel.order.missingBottlesQuantity} cajas faltantes',
+              value: 'S/. 100.00',
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class PricesRow extends StatelessWidget {
+  const PricesRow({
+    Key key,
+    @required this.text,
+    @required this.value,
+  }) : super(key: key);
+
+  final String text;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            '$text :',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+        Text(
+          value,
+          textAlign: TextAlign.right,
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                color: AmadisColors.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+      ],
     );
   }
 }

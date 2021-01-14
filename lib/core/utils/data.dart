@@ -22,22 +22,22 @@ const orderTypes = <OrderType>[
 const orderStates = <OrderState>[
   OrderState(
     id: 1,
-    name: 'Creados',
+    name: 'Creado',
     description: 'Orden creada.',
   ),
   OrderState(
     id: 2,
-    name: 'Confirmados',
+    name: 'Confirmado',
     description: 'Orden confirmada.',
   ),
   OrderState(
     id: 3,
-    name: 'Cancelados',
+    name: 'Cancelado',
     description: 'Orden cancelada.',
   ),
   OrderState(
     id: 4,
-    name: 'Preparados',
+    name: 'Preparado',
     description: 'Orden preparada para su envío.',
   ),
   OrderState(
@@ -47,17 +47,17 @@ const orderStates = <OrderState>[
   ),
   OrderState(
     id: 6,
-    name: 'Arribados',
+    name: 'Arribado',
     description: 'Orden arribada al destino.',
   ),
   OrderState(
     id: 7,
-    name: 'Cotizados',
+    name: 'Cotizado',
     description: 'Orden cotizada.',
   ),
   OrderState(
     id: 8,
-    name: 'Completados',
+    name: 'Completado',
     description: 'Orden completada.',
   ),
 ];

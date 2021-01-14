@@ -51,8 +51,8 @@ class OrderContainer extends StatelessWidget {
                 child: Column(
                   children: [
                     OrderDataCard(order: _viewModel.order),
-                    SizedBox(height: hp(1)),
-                    CustomerDataCard(),
+                    // SizedBox(height: hp(1)),
+                    // CustomerDataCard(),
                     SizedBox(height: hp(1)),
                     OrderDetailCard(),
                   ],
@@ -102,12 +102,21 @@ class OrderContainer extends StatelessWidget {
                       horizontal: wp(8),
                       vertical: hp(1.5),
                     ),
-                    child: Text(
-                      'Pagar ✔',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .copyWith(color: Colors.white),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Pagar',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(color: Colors.white),
+                        ),
+                        SizedBox(width: wp(2)),
+                        Icon(
+                          Icons.credit_card,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                   ),
                 ],

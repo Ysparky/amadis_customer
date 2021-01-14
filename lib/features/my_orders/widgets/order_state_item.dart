@@ -37,7 +37,7 @@ class OrderStateItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: wp(0.5)),
           child: Center(
             child: Text(
-              state.name,
+              state.id != 5 ? '${state.name}s' : state.name,
               style: Theme.of(context).textTheme.subtitle1.copyWith(
                   color: !state.selected
                       ? AmadisColors.primaryColor
