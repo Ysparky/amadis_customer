@@ -1,3 +1,4 @@
+import 'package:amadis_customer/core/utils/assets.dart';
 import 'package:amadis_customer/core/utils/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -25,27 +26,23 @@ class OrderCardItem extends StatelessWidget {
           arguments: OrderDetailPageArguments(order: order),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: hp(1)),
+          padding: EdgeInsets.symmetric(
+            vertical: hp(1),
+            horizontal: wp(1),
+          ),
           child: Row(
             children: [
-              Expanded(
-                child: Text(
-                  '22\nkm',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
-                ),
+              Image.asset(
+                AmadisAssets.order,
+                scale: hp(0.2),
               ),
               SizedBox(width: wp(2)),
               Expanded(
                 flex: 8,
                 child: _TextColumn(order: order),
               ),
-              Expanded(child: Icon(Icons.navigate_next)),
+              SizedBox(width: wp(1)),
+              Icon(Icons.navigate_next),
             ],
           ),
         ),

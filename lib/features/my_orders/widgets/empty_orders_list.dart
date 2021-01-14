@@ -1,9 +1,8 @@
+import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/features/my_orders/my_orders_view_model.dart';
 import 'package:flutter/material.dart';
 
-import 'package:amadis_customer/core/utils/assets.dart';
-import 'package:amadis_customer/core/utils/colors.dart';
-import 'package:amadis_customer/core/utils/responsive.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class EmptyOrdersList extends StatelessWidget {
@@ -22,11 +21,10 @@ class EmptyOrdersList extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                AmadisAssets.emptyBox,
+              SvgPicture.asset(
+                AmadisAssets.empty_box,
                 fit: BoxFit.cover,
-                color: AmadisColors.primaryColor,
-                height: hp(20),
+                height: hp(30),
               ),
               SizedBox(height: hp(2)),
               Text(
@@ -36,9 +34,22 @@ class EmptyOrdersList extends StatelessWidget {
                     .headline4
                     .copyWith(fontWeight: FontWeight.bold),
               ),
+              SizedBox(height: hp(3)),
               Text(
-                'Todavía no tiene pedidos ${_viewModel.activeState.name.toLowerCase()}',
+                'No hay pedidos ${_viewModel.activeState.name.toLowerCase()}',
                 style: Theme.of(context).textTheme.subtitle1,
+              ),
+              SizedBox(height: hp(3)),
+              MaterialButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Text('Refrescar'),
+                ),
+                color: AmadisColors.secondaryColor,
+                onPressed: () => _viewModel.orderService
+                    .getOrders(stateId: _viewModel.activeState.id),
+                shape: StadiumBorder(),
+                textColor: Colors.white,
               ),
             ],
           ),

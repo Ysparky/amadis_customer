@@ -12,7 +12,10 @@ class AmadisAssets {
   static const credit_card =
       'assets/icon/icons8-parte-trasera-de-tarjeta-bancaria-40.png';
   static const check_mark_2 = 'assets/icon/check_mark_2.png';
+  static const order = 'assets/icon/order.png';
 
   static const svg_check_mark = 'assets/icon/check.svg';
   static const svg_check_mark_2 = 'assets/icon/check_mark.svg';
+  static const building_app = 'assets/img/building-app.svg';
+  static const empty_box = 'assets/img/empty_box.svg';
 }

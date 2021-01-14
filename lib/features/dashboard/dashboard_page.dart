@@ -1,7 +1,6 @@
 import 'package:amadis_customer/core/utils/utils.dart';
 import 'package:amadis_customer/features/home/home_page.dart';
 import 'package:amadis_customer/features/my_orders/my_orders_page.dart';
-import 'package:amadis_customer/features/profile/profile_page.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +47,7 @@ class _DashboardScreenState extends State<DashboardPage> {
           children: <Widget>[
             HomePage(),
             MyOrdersPage(initialStateId: widget.initialStateId),
-            ProfilePage(),
+            // ProfilePage(),
           ],
         ),
       ),
@@ -77,19 +76,19 @@ class _DashboardScreenState extends State<DashboardPage> {
             inactiveColor: AmadisColors.secondaryColor.withOpacity(0.8),
           ),
           BottomNavyBarItem(
-            title: Text('Mis Pedidos'),
+            title: Text('Pedidos'),
             icon: Icon(Icons.location_on),
             textAlign: TextAlign.center,
             activeColor: AmadisColors.primaryColor,
             inactiveColor: AmadisColors.secondaryColor.withOpacity(0.8),
           ),
-          BottomNavyBarItem(
-            title: Text('Perfil'),
-            icon: Icon(Icons.person_outline),
-            textAlign: TextAlign.center,
-            activeColor: AmadisColors.primaryColor,
-            inactiveColor: AmadisColors.secondaryColor.withOpacity(0.8),
-          ),
+          // BottomNavyBarItem(
+          //   title: Text('Perfil'),
+          //   icon: Icon(Icons.person_outline),
+          //   textAlign: TextAlign.center,
+          //   activeColor: AmadisColors.primaryColor,
+          //   inactiveColor: AmadisColors.secondaryColor.withOpacity(0.8),
+          // ),
         ],
       ),
     );
